@@ -35,6 +35,7 @@
   },
   "variables": {
     "namePrefix": "[concat(parameters('serviceIdentifier'), parameters('environment'), parameters('environmentInstance'))]",
+    "appInsightsName": "[concat(variables('namePrefix'), '-ai-01')]",
     "servicePlanName": "[concat(variables('namePrefix'), '-asp-01')]"
   },
   "resources": [
@@ -53,6 +54,19 @@
       },
       "tags": {
         "environment": "[parameters('environmentName')]"
+      }
+    },
+    {
+      "apiVersion": "2018-05-01-preview",
+      "name": "[variables('appInsightsName')]",
+      "type": "Microsoft.Insights/components",
+      "location": "[resourceGroup().location]",
+      "kind": "other",
+      "tags": {
+        "environment": "[parameters('environmentName')]"
+      },
+      "properties": {
+        "Application_Type": "other"
       }
     }
   ]
